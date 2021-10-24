@@ -18,28 +18,32 @@ showTime();
 
 /* Greeting */
 
-function showGreeting(){
-  const date1 = new Date();
-  const hours = date1.getHours();
-  
- // console.log(hours);
+  let greet;
   function getTimeOfDay(){
-    let greet;
+    const date1 = new Date();
+    const hours = date1.getHours();
     
+    // console.log(hours);
+
     if (hours >= 6 && hours < 12) {
-      greet = "Good morning,";
+      greet = "morning";
     } else if (hours >= 12 && hours < 18) {
-      greet = "Good afternoon,";
+      greet = "afternoon";
     } else if (hours >= 18 && hours < 24) {
-      greet = "Good evening,";
+      greet = "evening";
     } else {
-      greet = "Good night,";
+      greet = "night";
     }
-    let greeting = document.querySelector('.greeting');
-    greeting.textContent = greet;
+    
    // console.log(greet);
   }
   getTimeOfDay();
+
+
+function showGreeting(){
+ let greeting = document.querySelector('.greeting');
+    greeting.textContent = `Good ${greet},`;
+  
 }
 showGreeting();
 
@@ -59,17 +63,57 @@ window.addEventListener('load', getLocalStorage);
 
 /* Change backgrounds*/
 
-body.style.backgroundImage = "url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/evening/18.jpg')";
 
-function getRandom(min, max) {
-  min = Math.ceil(1);
-  max = Math.floor(21);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+
+
+
+let rand = Math.floor(Math.random() * 21);
+function getRandom() {
+  
+  //console.log(rand); 
 }
-console.log(max)
 getRandom();
 
+function setBg(){
+  
+   rand = rand.toString().padStart(2, "0");
+    
+  //  console.log(rand);
+    document.body.style.backgroundImage = `url("https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${greet}/${rand}.jpg")`;
 
+  }
+  setBg();
+
+
+
+const prev = document.querySelector('.slide-prev'),
+      next = document.querySelector('.slide-next');
+
+function getSlideNext(){
+  if (rand < 20) { 
+    rand++;   
+    setBg(rand);
+  } else {
+    rand = 1;
+    setBg(rand);
+  }        
+    console.log(rand);
+}
+next.addEventListener('click', getSlideNext);
+
+function getSlidePrev(){
+  if (rand > 1) {     
+    rand--;   
+    setBg(rand);
+  } else {
+    rand = 20;
+    setBg(rand);
+  }        
+    console.log(rand);
+}
+prev.addEventListener('click', getSlidePrev);
+
+//getSlideNext();
 
 /* Change language */
 /*
