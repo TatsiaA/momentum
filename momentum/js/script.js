@@ -91,13 +91,14 @@ const prev = document.querySelector('.slide-prev'),
 
 function getSlideNext(){
   if (rand < 20) { 
-    rand++;   
     setBg(rand);
+    rand++;   
+    
   } else {
     rand = 1;
     setBg(rand);
   }        
-    console.log(rand);
+  //  console.log(rand);
 }
 next.addEventListener('click', getSlideNext);
 
@@ -109,41 +110,49 @@ function getSlidePrev(){
     rand = 20;
     setBg(rand);
   }        
-    console.log(rand);
+  //  console.log(rand);
 }
 prev.addEventListener('click', getSlidePrev);
 
-//getSlideNext();
+
 
 /* Change language */
-/*
+
 let text = document.querySelector('.quote');
 let author = document.querySelector('.author');
 let quoteBtn = document.querySelector('.change-quote');
 
 async function getQuotes(){
   let quotes;
+  //let language = document.querySelector('lang')
  // console.log(language);
 
-  if (language == 'en'){
-    quotes = './data/quotes-en.json';
-  }
-
+ // if (language == 'en'){
+    quotes = 'js/data/quotes-en.json';
+//  }
+/*
   if (language == 'ru'){
-    quotes = './data/quotes-ru.json';
+    quotes = 'js/data/quotes-ru.json';
   }
-
+*/
   const res = await fetch(quotes);
   const data = await res.json();
-  let randomQuote = randomIntFromInterval(1, 102);
+ // console.log(data);
 
-  text.textContent = `${data.quotes[randomQuote].text}`;
-  author.textContent = `${data.quotes[randomQuote].author}`;
-
+ let randomQuote = Math.floor(Math.random() * data.length);
+ // console.log(randomQuote);
+ // console.log(data.length);
+  
+  text.textContent = `${data[randomQuote].text}`;
+  author.textContent = `${data[randomQuote].author}`;
+ // console.log(text.textContent);
+ // console.log(author.textContent);
+  
 }
 
+
 document.addEventListener('DOMContentLoaded', getQuotes);
-console.log(language);
+//console.log(language);
 
 quoteBtn.addEventListener('click', getQuotes);
 
