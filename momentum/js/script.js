@@ -34,9 +34,10 @@ showTime();
     } else {
       greet = "night";
     }
-    window.setInterval(getTimeOfDay, 1000);
+    
    // console.log(greet);
   }
+  window.setInterval(getTimeOfDay, 1000);
   getTimeOfDay();
 
 
