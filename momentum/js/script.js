@@ -34,7 +34,7 @@ showTime();
     } else {
       greet = "night";
     }
-    
+    window.setInterval(getTimeOfDay, 1000);
    // console.log(greet);
   }
   getTimeOfDay();
@@ -67,10 +67,10 @@ window.addEventListener('load', getLocalStorage);
 
 
 
-let rand = Math.floor(Math.random() * 21);
+let rand = Math.ceil(Math.random() * 20);
 function getRandom() {
   
-  //console.log(rand); 
+ // console.log(rand); 
 }
 getRandom();
 
@@ -83,8 +83,7 @@ function setBg(){
 
   }
   setBg();
-
-
+                                               
 
 const prev = document.querySelector('.slide-prev'),
       next = document.querySelector('.slide-next');
@@ -157,15 +156,7 @@ document.addEventListener('DOMContentLoaded', getQuotes);
 quoteBtn.addEventListener('click', getQuotes);
 
 
-/*
-window.addEventListener('load', () => {
-  getQuotes(language)
-})
 
-changeQuoteBtn.addEventListener('click', () => {
-  getQuotes(language)
-})
-*/
 
 /* Weather */
 
@@ -222,3 +213,68 @@ window.addEventListener('load', getLocalStorageForCity);
 
 yourcity.addEventListener('change', getWeather);
 window.addEventListener('load', getWeather);
+
+
+/* Player */
+
+import playList from './playList.js';
+//console.log(playList);
+
+let isPlay = false;
+//let playNum = Math.floor(Math.random() * 4);
+let playNum = 0;
+const playListContainer = document.querySelector('.play-list');
+let playBtn = document.querySelector('.play');
+const prevBtn = document.querySelector('.play-prev');
+const nextBtn = document.querySelector('.play-next');
+const audio = document.querySelector('audio');
+
+function playAudio() {
+  audio.src = playList[playNum].src;
+  audio.currentTime = 0;
+  audio.play();
+  isPlay = true;
+ 
+ //console.log(playNum);
+}
+function pauseAudio() {
+  audio.pause();
+  isPlay = false;
+ 
+}
+
+function toggleBtn() {
+ playBtn.classList.toggle('pause');
+ pauseAudio();
+ 
+}
+
+function togglePlay() {
+  if (isPlay == true){
+    playAudio(playNum);
+  //playBtn.style.backgroundImage = `../assets/svg/pause.svg`;
+  
+} else {
+  pauseAudio(playNum);
+ // playBtn.style.backgroundImage = `../assets/svg/play.svg`;
+
+}
+}
+togglePlay();
+
+
+
+playBtn.addEventListener('click', toggleBtn);
+playBtn.addEventListener('click', playAudio);
+//playBtn.addEventListener('click', pauseAudio);
+
+
+for(let i = 0; i < playList.length; i++) {
+  const li = document.createElement('li');
+li.classList.add('play-item');
+li.textContent = `${playList[i].title}`;
+//console.log(li.textContent);
+playListContainer.append(li);
+}
+
+//pauseBtn.addEventListener('click', pauseAudio);
