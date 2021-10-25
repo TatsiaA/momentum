@@ -116,7 +116,7 @@ prev.addEventListener('click', getSlidePrev);
 
 
 
-/* Change language */
+/* Change quote */
 
 let text = document.querySelector('.quote');
 let author = document.querySelector('.author');
@@ -166,3 +166,59 @@ changeQuoteBtn.addEventListener('click', () => {
   getQuotes(language)
 })
 */
+
+/* Weather */
+
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const wind = document.querySelector('.wind');
+const humidity = document.querySelector('.humidity');
+const yourcity = document.querySelector('.city');
+
+async function getWeather() {  
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${yourcity.value}&lang=en&appid=f8bcf48e68c4e870c8738d6525319d52&units=metric`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.cod == "404"){
+    yourcity.value = "";
+    yourcity.placeholder = "ERROR";
+    temperature.textContent = `City not found`;
+    weatherIcon.classList.add(`owf-950`);
+    weatherDescription.textContent = 'Try to enter correct city';
+    wind.textContent = "";
+    humidity.textContent = "";
+    
+  } else {
+  //console.log(data.weather[0].id, data.weather[0].description, data.main.temp);
+  weatherIcon.className = 'weather-icon owf';
+  weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+  temperature.textContent = `${Math.round(data.main.temp)}°C`;
+  weatherDescription.textContent = data.weather[0].description;
+  wind.textContent = `Wind speed: ${Math.round(data.wind.speed)} m/s`;
+  humidity.textContent = `Humidity: ${Math.round(data.main.humidity)} %`;
+  }
+
+}
+getWeather();
+
+function setLocalStorageForCity() {
+/*  if (data.cod == "404"){
+    yourcity.value = "Minsk";
+    localStorage.setItem('city', yourcity.value);
+    console.log(yourcity.value);
+  } else */
+  localStorage.setItem('city', yourcity.value);
+  console.log(yourcity.value);
+}
+window.addEventListener('beforeunload', setLocalStorageForCity);
+
+function getLocalStorageForCity() {
+  if(localStorage.getItem('city')) {
+    yourcity.value = localStorage.getItem('city');
+  }
+}
+window.addEventListener('load', getLocalStorageForCity);
+
+yourcity.addEventListener('change', getWeather);
+window.addEventListener('load', getWeather);
