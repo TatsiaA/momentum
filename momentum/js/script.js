@@ -226,6 +226,7 @@ let isPlay = false;
 let playNum = 0;
 const playListContainer = document.querySelector('.play-list');
 let playBtn = document.querySelector('.play');
+let pauseBtn = document.querySelector('.pause');
 const prevBtn = document.querySelector('.play-prev');
 const nextBtn = document.querySelector('.play-next');
 const audio = document.querySelector('audio');
@@ -245,10 +246,10 @@ function pauseAudio() {
 }
 
 function toggleBtn() {
- playBtn.classList.toggle('pause');
- pauseAudio();
+ playBtn.classList.toggle('pause'); 
  
 }
+playBtn.addEventListener('click', toggleBtn);
 
 function togglePlay() {
   if (isPlay == true){
@@ -265,7 +266,7 @@ togglePlay();
 
 
 
-playBtn.addEventListener('click', toggleBtn);
+
 playBtn.addEventListener('click', playAudio);
 //playBtn.addEventListener('click', pauseAudio);
 
